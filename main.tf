@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.104.2"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${var.name_prefix}-rg"
   location = "${var.location}"
@@ -14,7 +28,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = "${var.name_prefix}subnet"
   virtual_network_name = "${azurerm_virtual_network.vnet.name}"
   resource_group_name  = "${azurerm_resource_group.rg.name}"
-  address_prefix       = "${var.subnet_address_space}"
+  address_prefixes     = "${var.subnet_address_space}"
 }
 
 resource "azurerm_network_security_group" "nsg" {
@@ -41,77 +55,65 @@ resource "azurerm_network_interface" "nic" {
   name                      = "${var.name_prefix}nic"
   location                  = "${var.location}"
   resource_group_name       = "${azurerm_resource_group.rg.name}"
-  network_security_group_id = "${azurerm_network_security_group.nsg.id}"
 
   ip_configuration {
     name                          = "${var.name_prefix}ipconfig"
     subnet_id                     = "${azurerm_subnet.subnet.id}"
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "${var.ip_allocation}"
     public_ip_address_id          = "${azurerm_public_ip.pip.id}"
   }
 
-  depends_on = ["azurerm_network_security_group.nsg"]
+  depends_on = [azurerm_network_security_group.nsg]
 }
 
 resource "azurerm_public_ip" "pip" {
   name                         = "${var.name_prefix}-ip"
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.rg.name}"
-  public_ip_address_allocation = "dynamic"
+  allocation_method            = "${var.ip_allocation}"
   domain_name_label            = "${var.hostname}"
 }
 
 resource "azurerm_storage_account" "stor" {
-  name                = "${var.hostname}stor"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
-  account_type        = "${var.storage_account_type}"
+  name                     = "${var.hostname}stor"
+  location                 = "${var.location}"
+  resource_group_name      = "${azurerm_resource_group.rg.name}"
+  account_tier             = "${var.storage_account_tier}"
+  account_replication_type = "${var.storage_account_replication_type}"
 }
 
 resource "azurerm_storage_container" "storc" {
   name                  = "${var.name_prefix}-vhds"
-  resource_group_name   = "${azurerm_resource_group.rg.name}"
   storage_account_name  = "${azurerm_storage_account.stor.name}"
   container_access_type = "private"
 }
 
-resource "azurerm_virtual_machine" "vm" {
+resource "azurerm_linux_virtual_machine" "vm" {
   name                  = "${var.name_prefix}vm"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rg.name}"
-  vm_size               = "${var.vm_size}"
+  size                  = "${var.vm_size}"
+  admin_username        = "${var.admin_username}"
   network_interface_ids = ["${azurerm_network_interface.nic.id}"]
 
-  storage_image_reference {
+  admin_ssh_key {
+    username   = "${var.admin_username}"
+    public_key = file("${var.ssh_public_key}")
+  }
+
+  os_disk {
+     caching              = "ReadWrite"
+     storage_account_type = "${var.storage_account_type}"
+  }
+
+  source_image_reference {
     publisher = "${var.image_publisher}"
     offer     = "${var.image_offer}"
     sku       = "${var.image_sku}"
     version   = "${var.image_version}"
   }
 
-  storage_os_disk {
-    name          = "${var.name_prefix}osdisk"
-    vhd_uri       = "${azurerm_storage_account.stor.primary_blob_endpoint}${azurerm_storage_container.storc.name}/${var.name_prefix}osdisk.vhd"
-    caching       = "ReadWrite"
-    create_option = "FromImage"
-  }
-
-  os_profile {
-    computer_name  = "${var.hostname}"
-    admin_username = "${var.admin_username}"
-    admin_password = "${var.admin_password}"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = "${var.disable_password_authentication}"
-
-    ssh_keys = [{
-      path     = "/home/${var.admin_username}/.ssh/authorized_keys"
-      key_data = "${var.ssh_public_key}"
-    }]
-  }
-
-  depends_on = ["azurerm_storage_account.stor"]
+  depends_on = [azurerm_storage_account.stor]
 }
 
 output "admin_username" {

@@ -14,7 +14,7 @@ variable "ssh_public_key" {
 # optional variables
 variable "location" {
   description = "region where the resources should exist"
-  default     = "eastus"
+  default     = "westus"
 }
 
 variable "vnet_address_space" {
@@ -24,7 +24,12 @@ variable "vnet_address_space" {
 
 variable "subnet_address_space" {
   description = "the subset of the virtual network for this subnet"
-  default     = "10.0.10.0/24"
+  default     = ["10.0.10.0/24"]
+}
+
+variable "ip_allocation" {
+  description = "the IP allocation method"
+  default     = "Dynamic"
 }
 
 variable "storage_account_type" {
@@ -32,9 +37,20 @@ variable "storage_account_type" {
   default     = "Standard_LRS"
 }
 
+variable "storage_account_replication_type" {
+  description = "type of storage account"
+  default     = "LRS"
+}
+
+variable "storage_account_tier" {
+  description = "storage account tier"
+  default     = "Standard"
+}
+
 variable "vm_size" {
   description = "size of the vm to create"
-  default     = "Standard_A0"
+  #default     = "Standard_A0"
+  default     = "Standard_A1_v2"
 }
 
 variable "image_publisher" {
