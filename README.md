@@ -37,7 +37,7 @@ This is approach #2 from above. You can create a base module locally to source t
 
 ```hcl
 module "azlinuxvm" {
-  source = "github.com/tstringer/terraform-azure-linux-vm"
+  source = "github.com/indrgun/terraform-azure-linux-vm"
 
   name_prefix    = "myprefix"
   hostname       = "myhostname"
