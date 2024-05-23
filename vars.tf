@@ -60,12 +60,12 @@ variable "image_publisher" {
 
 variable "image_offer" {
   description = "the name of the offer (az vm image list)"
-  default     = "UbuntuServer"
+  default     = "0001-com-ubuntu-server-focal"
 }
 
 variable "image_sku" {
   description = "image sku to apply (az vm image list)"
-  default     = "16.04-LTS"
+  default     = "20_04-lts"
 }
 
 variable "image_version" {
