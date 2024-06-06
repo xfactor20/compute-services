@@ -48,6 +48,13 @@ terraform apply
 ## Output
 After you run the terraform apply, there will be four outputs: `vm_linux_server_instance_id`, `vm_linux_server_instance_public_dns`, `vm_linux_server_instance_public_ip`, `vm_linux_server_instance_private_ip`. You can identify the EC2 instance with the id on AWS console.  The FQDN DNS hostname is given next.  The public IP is static IP that is elastic so IP will persist even when instance is stopped.
 
+You are able to SSH to the morpheus lumerin EC2 instance or host with the generated SSH public/private key pair file by terraform in the current directory:
+
+```
+chmod 400 ./morpheus_lumerin-linux-<aws-region>.pem
+ssh -i morpheus_lumerin-linux-<aws-region>.pem ec2-user@<public_ip>
+```
+
 Please do not forget to destroy the services with:
 
 ```
