@@ -1,2 +1,19 @@
-terraform.tfvars
-*.tfstate*
+*/terraform.tfvars
+*/*.tfstate*
+*/terraform.tfstate.backup
+*/.terraform.lock.hcl
+
+# Terraform configuration directory
+*/.terraform/
+
+# Crash log files
+crash.log
+
+# Ignore override files as they are usually used to override resources locally
+*/*.tfvars
+*/*.tfvars.json
+
+# Exclude any generated plan files
+*/plan.out
+*/*.pem
+*/*.*~
