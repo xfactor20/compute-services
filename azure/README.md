@@ -51,7 +51,7 @@ Then run `terraform get` to pull this module, and `terraform plan` to see what w
 
 Clone this repository...
 ```
-$ git clone https://github.com/tstringer/terraform-azure-linux-vm.git
+$ git clone https://github.com/indrgun/terraform-azure-linux-vm
 ```
 
 Navigate your terminal to this module's root directory. It's wise to first see what Terraform will do in your subscription...
