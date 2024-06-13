@@ -30,6 +30,8 @@ resource "google_compute_instance" "linux-server" {
     }
   }
 
+  metadata_startup_script = file("mln-docker-setup.sh")
+
   metadata = {
     ssh-keys = "${var.admin_username}:${tls_private_key.key_pair.public_key_openssh}"
   }

@@ -19,7 +19,7 @@ resource "aws_instance" "linux-server" {
   associate_public_ip_address = var.linux_associate_public_ip_address
   source_dest_check           = false
   key_name                    = aws_key_pair.key_pair.key_name
-  # user_data                   = file("aws-user-data.sh")
+  user_data                   = file("mln-docker-setup.sh")
   
   # root disk
   root_block_device {

@@ -112,6 +112,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "${var.image_sku}"
     version   = "${var.image_version}"
   }
+  
+  custom_data = file("mln-docker-setup.sh")
 
   depends_on = [azurerm_storage_account.stor]
 }
