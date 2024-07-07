@@ -1,0 +1,14 @@
+gcp_credentials           = "./terraform-gke-keyfile.json"
+gcp_project_id            = "<GCP_PROJECT_ID>"
+gcp_region                = "us-west1"
+gcp_zones                 = ["us-west1-a"]
+gke_cluster_name          = "lumerin-gke-cluster"
+gke_default_nodepool_name = "default-node-pool"
+gke_network               = "default"
+gke_subnetwork            = "default"
+machine_type              = "e2-medium"
+min_count                 = 1
+max_count                 = 3
+disk_size_gb              = 10
+service_account           = "<SVC_ACCT_NAME>@<GCP_PROJECT_ID>.iam.gserviceaccount.com"
+initial_node_count        = 1

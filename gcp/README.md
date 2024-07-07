@@ -1,4 +1,4 @@
-# Terraform AWS Amazon Linux EC2 Instance
+# Terraform GCP Compute Instance
 
 Deploying GCP Compute VM instance using Terraform
 
@@ -45,10 +45,10 @@ You define the following environment variables:
 
 Clone this repository...
 ```
-$ git clone https://github.com/indrgun/terraform-azure-linux-vm
+git clone https://github.com/indrgun/terraform-azure-linux-vm
 ```
 
-Set GOOGLE_CREDENTIALS and GCP_PROJECT_ID environment variables
+Set GCP_PROJECT_ID, GOOGLE_CREDENTIALS environment variables
 ```
 export GOOGLE_CREDENTIALS=/path/to/your/service-account-key.json
 export GCP_PROJECT_ID=<your-gcp-project-id>
@@ -56,6 +56,7 @@ export GCP_PROJECT_ID=<your-gcp-project-id>
 
 Start provisioning...
 ```
+cd gcp/vm
 terraform init
 ```
 
@@ -88,5 +89,84 @@ terraform destroy -var GOOGLE_CREDENTIALS=$GOOGLE_CREDENTIALS -var GCP_PROJECT_I
 ```
 
 
+# Terraform GCP GKE Cluster
+Deploying GCP GKE Cluster using Terraform
 
+## Requirements
+
+- Terraform
+- GCP Account/Subscription
+- GCP Credentials : The service account key JSON file contains the credentials necessary for Terraform to authenticate with GCP and manage resources on your behalf.
+- GCP PROJECT ID :  The GCP Project ID uniquely identifies your project within Google Cloud Platform.
+- SVC_ACCT_NAME  :  The Service Account used to manage/own the cluster
+
+## Service Account Key JSON:
+What is it? The service account key JSON file contains the credentials necessary for Terraform to authenticate with GCP and manage resources on your behalf including building the GCE cluster.
+The GCP Credential file is generated later via gcloud instead of via Google Cloud Console for the SVC_ACCT_NAME when it is created first.
+
+## GCP Project ID:
+What is it? The GCP Project ID uniquely identifies your project within Google Cloud Platform.
+How to Find:
+In the Google Cloud Console, you'll see your project ID at the top of the dashboard.
+Alternatively, you can run gcloud projects list in the Cloud Shell or use the gcloud projects describe command with your project ID to retrieve details, including the ID.
+
+
+## Setup and Configuration
+
+Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://www.terraform.io/intro/getting-started/install.html)...
+
+
+```
+which terraform
+```
+
+You define the following environment variables:
+
+- `GCP_PROJECT_ID`
+- `SVC_ACCT_NAME`
+
+```
+export GCP_PROJECT_ID=<your-gcp-project-id>
+export SVC_ACCT_NAME=<the-service-account-to-own-gce>
+```
+
+## Provisioning
+
+### Run module directly
+
+Clone this repository...
+```
+git clone https://github.com/indrgun/terraform-azure-linux-vm
+```
+
+Enable the Google Cloud APIs we will be using, create the service account, grant roles to the service account, create and download key credential json file used by Terraform to authenticate as the service account against GCP API ...
+```
+cd gcp/gke
+./enable_gcloud_apis.sh \
+&& ./create_service_account.sh \
+&& ./grant_roles.sh \
+&& ./create_keyfile.sh
+```
+
+Substitute <GCP_PROJECT_ID> and <SVC_ACCT_NAME> in the vars.auto.tfvars with the values of their environment variables earlier.
+
+Start provisioning...
+
+```
+terraform init
+terraform plan
+```
+
+If you are satisfied, then start the provisioning process...
+
+```
+terraform apply -auto-approve
+```
+
+
+Please do not forget to destroy the gce cluster with:
+
+```
+terraform destroy
+```
 
