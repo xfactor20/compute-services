@@ -27,6 +27,7 @@ You may define the following environment variables:
 Clone this repository...
 ```
 $ git clone https://github.com/indrgun/terraform-azure-linux-vm
+cd aws/ec2
 ```
 
 ```
@@ -64,6 +65,70 @@ terraform destroy
 The public static IP is additional extra cost  every hour if it is not attached to the instance so be careful.
 Please ensure to detach it and release it on AWS console just to make sure.
 
+# Terraform AWS EKS
 
+Deploying an Amazon Kubernetes EKS cluster on AWS using Terraform
+
+## Requirements
+
+- Terraform
+- AWS Account/Subscription
+
+## Setup and Configuration
+
+Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://www.terraform.io/intro/getting-started/install.html)...
+
+```
+which terraform
+```
+
+You may define the following environment variables:
+
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+
+## Provisioning
+
+### Run module directly
+
+Clone this repository...
+```
+$ git clone https://github.com/indrgun/terraform-azure-linux-vm
+cd aws/eks
+```
+
+```
+terraform init
+```
+
+```
+terraform plan
+```
+
+The aws_access_key and aws_secret_key are sourced from the env variables in vars.auto.tfvars file.  These two parameters are your AWS account's aws access id and secret key for access AWS API either by aws CLI or terraform.
+
+If you are satisfied, then start the provisioning process...
+
+```
+terraform apply
+```
+
+## Output
+Please login to your aws console and find the new EKS cluster created named "morpheus_lumerin_eks_cluster".
+
+In order to use kubectl from your local development machine accessing the cluster please do the following:
+```
+aws eks update-kubeconfig \
+--region us-west-1 \
+--name morpheus_lumerin_eks_cluster
+```
+
+Please do not forget to destroy the cluster and other services created after:
+```
+terraform destroy
+```
+
+There is also public static IP that is additional extra cost every hour if it is not attached to the instance so be careful.
+Please ensure to detach it and release it on AWS console just to make sure.  It should also be destroyed by terraform.
 
 
