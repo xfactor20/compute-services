@@ -29,6 +29,7 @@ Alternatively, you can run gcloud projects list in the Cloud Shell or use the gc
 
 Ensure that you have Terraform installed. If not, you may [reference the official Terraform documentation on installation](https://developer.hashicorp.com/terraform/install)
 
+
 ```
 which terraform
 ```
