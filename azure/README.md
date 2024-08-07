@@ -1,4 +1,4 @@
-# Linux VM Provisioning with Terraform
+# Linux VM Provisioning and Azure Kubernetes Service (AKS) setup via Terraform
 
 *Quickly create a single Linux VM in Azure, with sane and secure defaults*
 
@@ -74,3 +74,85 @@ terraform apply -var "name_prefix=linux" -var "hostname=linux$(echo $RANDOM)" -v
 ## Output
 
 After you run this Terraform module, there will be two outputs: `admin_username` and `vm_fqdn`. These two pieces are what you need to then immediately ssh into your new Linux machine.
+
+=========================================
+
+# Terraform-Azure-AKS-Linux-VM
+Deploy an Azure Kubernetes Service (AKS) cluster with Linux virtual machines using Terraform.
+
+## Requirements
+* Terraform v1.0.x
+* Azure CLI (`az` command-line tool)
+* Azure subscription and a valid account for authentication
+
+## Usage
+
+### Step 1: Clone the repository
+Clone this repository to your local machine:
+
+```bash
+git clone https://github.com/indrgun/terraform-azure-linux-vm.git
+cd terraform-azure-linux-vm
+```
+
+### Step 2: Create a new Azure resource group
+Create a new Azure resource group for your AKS deployment. Replace `<RESOURCE_GROUP_NAME>` with a unique name:
+
+```bash
+az group create --name <RESOURCE_GROUP_NAME> --location <REGION>
+```
+
+Replace `<REGION>` with the desired Azure region, such as `eastus`, `westus2`, or `northcentralus`.
+
+### Step 3: Initialize Terraform
+Initialize your working directory and fetch the required Azure provider plugins:
+
+```bash
+terraform init
+```
+
+### Step 4: Configure variables
+Create a file named `terraform.tfvars` with the following contents, replacing placeholders with your own values:
+
+```hcl
+# Define your Azure subscription information
+azure_subscription_id = "<AZURE_SUBSCRIPTION_ID>"
+azure_tenant_id       = "<AZURE_TENANT_ID>"
+azure_client_id       = "<AZURE_CLIENT_ID>"
+azure_client_secret   = "<AZURE_CLIENT_SECRET>"
+
+# Set the desired AKS cluster settings
+aks_cluster_name      = "<AKS_CLUSTER_NAME>"
+aks_node_count        = 3
+aks_vm_size           = "Standard_DS2_v2"
+```
+
+### Step 5: Deploy the infrastructure
+Run Terraform to create and configure your AKS deployment:
+
+```bash
+terraform apply -var-file="terraform.tfvars"
+```
+
+Follow the prompts to confirm the creation of resources. Terraform will create an Azure Kubernetes Service (AKS) cluster with Linux virtual machines.
+
+### Step 6: Access the AKS cluster
+Once the deployment is complete, you can access your AKS cluster using the jumpbox VM's public IP address:
+
+```bash
+az vm show --resource-group <RESOURCE_GROUP_NAME> --name jumpbox-vm --query publicIpAddress -o tsv
+```
+
+Use SSH or RDP to connect to the jumpbox VM and then use `kubectl` to interact with your AKS cluster.
+
+## Post-deployment
+After deploying the AKS cluster, you may want to perform additional tasks such as:
+
+* Configuring node pools
+* Deploying Kubernetes applications using Helm
+* Setting up monitoring and logging for your AKS cluster
+
+Refer to the [official Azure documentation](https://docs.microsoft.com/en-us/azure/aks/) for more information on managing and operating your AKS deployment.
+
+## Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvement, please create an issue or submit a pull request.
