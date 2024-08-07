@@ -27,7 +27,7 @@ Alternatively, you can run gcloud projects list in the Cloud Shell or use the gc
 
 ## Setup and Configuration
 
-Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://www.terraform.io/intro/getting-started/install.html)...
+Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://developer.hashicorp.com/terraform/install)
 
 ```
 which terraform
