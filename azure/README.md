@@ -1,7 +1,5 @@
 # Linux VM Provisioning and Azure Kubernetes Service (AKS) setup via Terraform
 
-*Quickly create a single Linux VM in Azure, with sane and secure defaults*
-
 ## Requirements
 
 - Terraform
