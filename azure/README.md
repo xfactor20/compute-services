@@ -7,6 +7,28 @@
 - Terraform
 - Azure Subscription
 
+## Preconfiguration
+
+This section defines and configures parameter variables required for setup and configuration
+
+1.	Azure Account Setup
+o	Go to https://portal.azure.com and log on with your account
+
+o	Install the Microsoft Authenticator for Two-Factor Authentication (2FA)
+
+2.	Azure Command-Line Interface (CLI) Session
+o	On your Azure portal session, click on the "command shell" icon in the toolbar at the top of the screen to start an Azure Cloud Shell session.
+
+NOTES: When starting the CLI, select the Bash option
+      Instructions to Start Azure CLI session: https://learn.microsoft.com/en-us/azure/cloud-shell/get-started/classic?tabs=azurecli
+
+3.	Azure CLI Configuration - In the Cloud Shell session, run these commands to get parameter information required for cloud host provisioning and AKS configuration by Terraform:
+1.	mkdir projects/mln
+2.	git clone https://github.com/xfactor20/compute-services.git
+3.	cd compute-services/vm
+4.	chmod +x mln_env_config.sh
+5.	./mln_env_config.sh
+
 ## Setup and Configuration
 
 Ensure that you have Terraform installed. If not, you may [reference the official Terraform documentation for installation](https://developer.hashicorp.com/terraform/install)
@@ -15,7 +37,7 @@ Ensure that you have Terraform installed. If not, you may [reference the officia
 which terraform
 ```
 
-The Azure provider in Terraform requires the following environment variables defined...
+The Azure provider in Terraform requires the following environment variables defined by the previous section.
 
 - `ARM_SUBSCRIPTION_ID`
 - `ARM_TENANT_ID`
