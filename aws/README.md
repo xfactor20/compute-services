@@ -20,14 +20,43 @@ You may define the following environment variables:
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 
+`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are authentication credentials used to grant access to your AWS (Amazon Web Services) account and its associated resources.
+
+**AWS_ACCESS_KEY_ID**
+
+* **Purpose**: The `AWS_ACCESS_KEY_ID` is a unique identifier that represents your AWS account. It's used to authenticate your requests to AWS services.
+* **Location**: You can find your `AWS_ACCESS_KEY_ID` in the AWS Management Console or by creating an access key using the following steps:
+	+ Sign in to the AWS Management Console (<https://aws.amazon.com/console/>).
+	+ Navigate to the "Security, Identity & Compliance" section and click on "IAM".
+	+ Click on "Users", then select your user name.
+	+ Click on the "Credentials" tab.
+	+ Look for the "Access key" field; if it's blank, click on "Create access key". The `AWS_ACCESS_KEY_ID` will be displayed in the dialog that appears.
+
+**AWS_SECRET_ACCESS_KEY**
+
+* **Purpose**: The `AWS_SECRET_ACCESS_KEY` is a secret code used to verify your identity when making requests to AWS services. It should be kept confidential and secure.
+* **Location**: You can find your `AWS_SECRET_ACCESS_KEY` by following these steps:
+	+ Sign in to the AWS Management Console (<https://aws.amazon.com/console/>).
+	+ Navigate to the "Security, Identity & Compliance" section and click on "IAM".
+	+ Click on "Users", then select your user name.
+	+ Click on the "Credentials" tab.
+	+ Look for the "Secret access key" field; if it's blank, click on "Create access key". The `AWS_SECRET_ACCESS_KEY` will be displayed in the dialog that appears.
+
+**Note:** It's recommended to create a new access key and update your applications and scripts with the new credentials. This helps ensure security and prevents unauthorized access to your AWS account.
+
+Also, remember that it's crucial to keep both `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` secure and confidential, as they grant access to your AWS account and its associated resources. Never share these credentials publicly or store them in unprotected locations.
+
+
 ## Provisioning
 
 ### Run module directly
 
-Clone this repository...
+Clone this repository to a local or virtual directory
 ```
+$ mkdir /home/$(USERNAME)/projects/dev
+$ cd /home/$(USERNAME)/projects/dev
 $ git clone https://github.com/xfactor20/compute-services.git
-cd aws/ec2
+$ cd /home/$(USERNAME)/projects/dev/compute-services/aws/ec2
 ```
 
 ```
@@ -87,34 +116,64 @@ You may define the following environment variables:
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 
+`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are authentication credentials used to grant access to your AWS (Amazon Web Services) account and its associated resources.
+
+**AWS_ACCESS_KEY_ID**
+
+* **Purpose**: The `AWS_ACCESS_KEY_ID` is a unique identifier that represents your AWS account. It's used to authenticate your requests to AWS services.
+* **Location**: You can find your `AWS_ACCESS_KEY_ID` in the AWS Management Console or by creating an access key using the following steps:
+	+ Sign in to the AWS Management Console (<https://aws.amazon.com/console/>).
+	+ Navigate to the "Security, Identity & Compliance" section and click on "IAM".
+	+ Click on "Users", then select your user name.
+	+ Click on the "Credentials" tab.
+	+ Look for the "Access key" field; if it's blank, click on "Create access key". The `AWS_ACCESS_KEY_ID` will be displayed in the dialog that appears.
+
+**AWS_SECRET_ACCESS_KEY**
+
+* **Purpose**: The `AWS_SECRET_ACCESS_KEY` is a secret code used to verify your identity when making requests to AWS services. It should be kept confidential and secure.
+* **Location**: You can find your `AWS_SECRET_ACCESS_KEY` by following these steps:
+	+ Sign in to the AWS Management Console (<https://aws.amazon.com/console/>).
+	+ Navigate to the "Security, Identity & Compliance" section and click on "IAM".
+	+ Click on "Users", then select your user name.
+	+ Click on the "Credentials" tab.
+	+ Look for the "Secret access key" field; if it's blank, click on "Create access key". The `AWS_SECRET_ACCESS_KEY` will be displayed in the dialog that appears.
+
+**Note:** It's recommended to create a new access key and update your applications and scripts with the new credentials. This helps ensure security and prevents unauthorized access to your AWS account.
+
+Also, remember that it's crucial to keep both `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` secure and confidential, as they grant access to your AWS account and its associated resources. Never share these credentials publicly or store them in unprotected locations.
+
 ## Provisioning
 
 ### Run module directly
 
-Clone this repository...
+Clone this repository to a local or virtual directory
 ```
+$ mkdir /home/$(USERNAME)/projects/dev
+$ cd /home/$(USERNAME)/projects/dev
 $ git clone https://github.com/xfactor20/compute-services.git
-cd aws/eks
+$ cd /home/$(USERNAME)/projects/dev/compute-services/aws/eks
 ```
 
+Initialize Terraform
 ```
 terraform init
 ```
 
+Review the provisioning plan
 ```
 terraform plan
 ```
 
 The aws_access_key and aws_secret_key are sourced from the env variables in vars.auto.tfvars file.  These two parameters are your AWS account's aws access id and secret key for access AWS API either by aws CLI or terraform.
 
-If you are satisfied, then start the provisioning process...
+If verification passes, start the provisioning process
 
 ```
 terraform apply
 ```
 
 ## Output
-Please login to your aws console and find the new EKS cluster created named "morpheus_lumerin_eks_cluster".
+Please login to your aws console and find the new EKS cluster created named **morpheus_lumerin_eks_cluster**.
 
 In order to use kubectl from your local development machine accessing the cluster please do the following:
 ```
@@ -123,12 +182,12 @@ aws eks update-kubeconfig \
 --name morpheus_lumerin_eks_cluster
 ```
 
-Please do not forget to destroy the cluster and other services created after:
+Reminder to destroy the cluster and other services created after:
 ```
 terraform destroy
 ```
 
-There is also public static IP that is additional extra cost every hour if it is not attached to the instance so be careful.
-Please ensure to detach it and release it on AWS console just to make sure.  It should also be destroyed by terraform.
+**IMPORTANT**: There is also a public static IP that that is extra cost and fees for every hour if it is not attached to the instance so be careful.
+Please ensure to detach it and release it onto AWS console to be certain.  It should also be destroyed by terraform.
 
 
