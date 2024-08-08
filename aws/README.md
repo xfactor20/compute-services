@@ -9,7 +9,7 @@ Deploying an Amazon Linux EC2 Instance in AWS using Terraform
 
 ## Setup and Configuration
 
-Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://www.terraform.io/intro/getting-started/install.html)...
+Ensure that you have Terraform installed. If not, you may [reference the official Terraform documentation on installing](https://developer.hashicorp.com/terraform/install)
 
 ```
 which terraform
@@ -26,7 +26,7 @@ You may define the following environment variables:
 
 Clone this repository...
 ```
-$ git clone https://github.com/indrgun/terraform-azure-linux-vm
+$ git clone https://github.com/xfactor20/compute-services.git
 cd aws/ec2
 ```
 
@@ -76,7 +76,7 @@ Deploying an Amazon Kubernetes EKS cluster on AWS using Terraform
 
 ## Setup and Configuration
 
-Ensure that you have Terraform installed. If you don't, you can [reference the official Terraform documentation on installing](https://www.terraform.io/intro/getting-started/install.html)...
+Ensure that you have Terraform installed. If not, you may [reference the official Terraform documentation on installing](https://developer.hashicorp.com/terraform/install)
 
 ```
 which terraform
