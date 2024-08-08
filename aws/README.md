@@ -93,7 +93,7 @@ You may define the following environment variables:
 
 Clone this repository...
 ```
-$ git clone https://github.com/indrgun/terraform-azure-linux-vm
+$ git clone https://github.com/xfactor20/compute-services.git
 cd aws/eks
 ```
 
