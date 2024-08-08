@@ -1,13 +1,8 @@
-# Linux VM Provisioning and Azure Kubernetes Service (AKS) setup via Terraform
-
-
-## Terraform-Azure-AKS-Linux-VM
-Deploy an Azure Kubernetes Service (AKS) cluster with Linux virtual machines using Terraform.
+# Linux VM Provisioning via Terraform
 
 ## Requirements
-* Terraform v1.0.x
+* Terraform
 * Azure subscription and a valid account for authentication
-* Azure CLI (`az` command-line tool)
 
 ## Pre-configuration
 
@@ -43,6 +38,116 @@ NOTES: When starting the CLI, select the Bash option
 ```
       ssh-keygen -t rsa -m PEM -b 4096 -C mln_aks_azure@myserver
 ```
+
+## Setup and Configuration
+
+The following environment variables are set by the Pre-configuration step and referenced by the Azure provider for Terraform:
+
+```
+      `AZURE_SUBSCRIPTION_ID`
+      `AZURE_TENANT_ID`
+      `AZURE_CLIENT_ID`
+      `AZURE_CLIENT_SECRET`
+```
+
+## Provisioning
+
+There are two ways to use this to provision...
+
+1. Create a new Terraform module that sources this remote module
+2. Clone to git repository and run the module directly
+
+### Source this remote module
+This is approach #1 from above. You can create a base module locally to source this module...
+
+```
+module "azlinuxvm" {
+  source = "github.com/xfactor20/terraform-azure-linux-vm"
+
+  name_prefix    = "myprefix"
+  hostname       = "myhostname"
+  ssh_public_key = "${file("/home/[localusername]/.ssh/id_rsa.pub")}"
+}
+```
+
+Run `terraform get` to pull this module
+Run `terraform plan` to see what will be applied
+Run `terraform apply` to kick off the provisioning
+
+
+### Run Module directly
+Clone this repository...
+
+$ git clone https://github.com/xfactor20/terraform-azure-linux-vm
+
+Navigate your terminal to this module's root directory. Run the `terraform plan` to view the potential changes first.
+
+```
+      cd /home/$(USERNAME)/projects/mln_aks/compute-services/vm
+      terraform plan -var "name_prefix=linux" -var "hostname=linux$(echo $RANDOM)" -var "ssh_public_key=$(cat ~/.ssh/id_rsa.pub)"
+```
+
+Apply the Terraform setup and configuration files onto the environment
+```
+      terraform apply -var "name_prefix=linux" -var "hostname=linux$(echo $RANDOM)" -var "ssh_public_key=$(cat ~/.ssh/id_rsa.pub)"
+```
+
+💡 As you can see here, there are three required variables (and only three):
+
+* `name_prefix` (what to prefix your Azure resources with)
+* `hostname` (this will be the public DNS name, recommended to randomize it to prevent likeliness of collisions)
+* `ssh_public_key` (your public key). To see optional variables and their defaults, take a look at `vars.tf`
+
+
+### Output
+After you run this Terraform module, there will be two outputs: `admin_username` and `vm_fqdn`. These two pieces are what you need to then immediately ssh into your new Linux machine.
+
+
+
+# Linux VM and Azure Kubernetes Service (AKS) setup via Terraform
+
+Deploy an Azure Kubernetes Service (AKS) cluster with Linux virtual machines using Terraform.
+
+## Requirements
+* Terraform v1.0.x
+* Azure subscription and a valid account for authentication
+* Azure CLI (`az` command-line tool)
+
+## Pre-configuration
+
+Ensure that you have Terraform installed. If not, you may [reference the official Terraform documentation for installation](https://developer.hashicorp.com/terraform/install)
+
+```
+which terraform
+```
+
+This section defines and configures parameter variables required for the `Setup and Configuration` section
+
+1.	Azure Account Setup
+o	Go to https://portal.azure.com and log on with your account
+
+o	Install the Microsoft Authenticator for Two-Factor Authentication (2FA)
+
+2.	Azure Command-Line Interface (CLI) Session
+o	On your Azure portal session, click on the "command shell" icon in the toolbar at the top of the screen to start an Azure Cloud Shell session.
+
+NOTES: When starting the CLI, select the Bash option
+      Instructions to Start Azure CLI session: https://learn.microsoft.com/en-us/azure/cloud-shell/get-started/classic?tabs=azurecli
+
+3.	Azure CLI Configuration - In the Cloud Shell session, run these commands to get parameter information required for cloud host provisioning and AKS configuration by Terraform:
+```
+      1.	mkdir /home/$(USERNAME)/projects/mln_aks
+      2.        cd /home/$(USERNAME)/projects/mln_aks
+      3.        git clone https://github.com/xfactor20/compute-services.git
+      4.	cd /home/$(USERNAME)/projects/mln_aks/compute-services/vm
+      5.	chmod +x mln_env_config.sh
+      6.	./mln_env_config.sh
+```
+4.	Generate an SSH key pair using this command.  Accept all default options.
+```
+      ssh-keygen -t rsa -m PEM -b 4096 -C mln_aks_azure@myserver
+```
+
 
 ## Usage
 
