@@ -91,7 +91,7 @@ Deploy an Azure Kubernetes Service (AKS) cluster with Linux virtual machines usi
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/indrgun/terraform-azure-linux-vm.git
+git clone https://github.com/xfactor20/terraform-azure-linux-vm.git
 cd terraform-azure-linux-vm
 ```
 
