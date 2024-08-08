@@ -46,7 +46,7 @@ You define the following environment variables:
 
 Clone this repository...
 ```
-git clone https://github.com/indrgun/terraform-azure-linux-vm
+git clone https://github.com/xfactor20/compute-services
 ```
 
 Set GCP_PROJECT_ID, GOOGLE_CREDENTIALS environment variables
@@ -136,7 +136,7 @@ export SVC_ACCT_NAME=<the-service-account-to-own-gce>
 
 Clone this repository...
 ```
-git clone https://github.com/indrgun/terraform-azure-linux-vm
+git clone https://github.com/xfactor20/compute-services
 ```
 
 Enable the Google Cloud APIs we will be using, create the service account, grant roles to the service account, create and download key credential json file used by Terraform to authenticate as the service account against GCP API ...
@@ -150,21 +150,21 @@ cd gcp/gke
 
 Substitute <GCP_PROJECT_ID> and <SVC_ACCT_NAME> in the vars.auto.tfvars with the values of their environment variables earlier.
 
-Start provisioning...
+Review the provisioning plan first
 
 ```
 terraform init
 terraform plan
 ```
 
-If you are satisfied, then start the provisioning process...
+if satisfactory, then start the provisioning process
 
 ```
 terraform apply -auto-approve
 ```
 
 
-Please do not forget to destroy the gce cluster with:
+Remindder to destroy the gce cluster with:
 
 ```
 terraform destroy
