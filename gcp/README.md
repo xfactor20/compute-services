@@ -150,21 +150,21 @@ cd gcp/gke
 
 Substitute <GCP_PROJECT_ID> and <SVC_ACCT_NAME> in the vars.auto.tfvars with the values of their environment variables earlier.
 
-Review the provisioning plan first
+Review the provisioning plan first:
 
 ```
 terraform init
 terraform plan
 ```
 
-if satisfactory, then start the provisioning process
+if satisfactory, then start the provisioning process:
 
 ```
 terraform apply -auto-approve
 ```
 
 
-Remindder to destroy the gce cluster with:
+Reminder to destroy the gce cluster with the command:
 
 ```
 terraform destroy
