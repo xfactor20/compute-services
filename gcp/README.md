@@ -13,7 +13,7 @@ GOOGLE_CREDENTIALS (Service Account Key JSON):
 What is it? The service account key JSON file contains the credentials necessary for Terraform to authenticate with GCP and manage resources on your behalf.
 
 * Creating and managing `GOOGLE_CREDENTIALS`:
-1. In the Google Cloud Console, go to the navigation menu (https://console.cloud.google.com/navigation/menu?&project).
+1. In the Google Cloud Console, go to the navigation menu (https://console.cloud.google.com/).
 2. Click on "APIs & Services" > "Credentials".
 3. Click on "Create credentials" and select "OAuth client ID".
 4. Follow the prompts to create a new OAuth client ID.
@@ -22,7 +22,7 @@ What is it? The service account key JSON file contains the credentials necessary
 7. You'll receive a JSON file containing your GOOGLE_CREDENTIALS. Store it securely.
 
 Note: If you need to generate a JSON key file instead of downloading the credentials file, follow these steps:
-1. In the Google Cloud Console, go to the navigation menu (https://console.cloud.google.com/navigation/menu?&project).
+1. In the Google Cloud Console, go to the navigation menu (https://console.cloud.google.com/).
 2. Click on "APIs & Services" > "Credentials".
 3. Click on "Create credentials" and select "API key".
 5. Choose "JSON" as the key type.
