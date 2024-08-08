@@ -37,11 +37,11 @@ This is approach #2 from above. You can create a base module locally to source t
 
 ```hcl
 module "azlinuxvm" {
-  source = "github.com/indrgun/terraform-azure-linux-vm"
+  source = "github.com/xfactor20/terraform-azure-linux-vm"
 
   name_prefix    = "myprefix"
   hostname       = "myhostname"
-  ssh_public_key = "${file("/home/yourlocaluser/.ssh/id_rsa.pub")}"
+  ssh_public_key = "${file("/home/[localusername]/.ssh/id_rsa.pub")}"
 }
 ```
 
@@ -51,7 +51,7 @@ Then run `terraform get` to pull this module, and `terraform plan` to see what w
 
 Clone this repository...
 ```
-$ git clone https://github.com/indrgun/terraform-azure-linux-vm
+$ git clone https://github.com/xfactor20/terraform-azure-linux-vm
 ```
 
 Navigate your terminal to this module's root directory. It's wise to first see what Terraform will do in your subscription...
