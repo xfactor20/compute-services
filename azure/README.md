@@ -33,11 +33,11 @@ NOTES: When starting the CLI, select the Bash option
 3.	Azure CLI Configuration - In the Cloud Shell session, run these commands to get parameter information required for cloud host provisioning and AKS configuration by Terraform:
 ```
       1.	mkdir projects/mln_aks
-      2.    cd projects/mln_aks
-      3.    git clone https://github.com/xfactor20/compute-services.git
-      3.	cd compute-services/vm
-      4.	chmod +x mln_env_config.sh
-      5.	./mln_env_config.sh
+      2.        cd projects/mln_aks
+      3.        git clone https://github.com/xfactor20/compute-services.git
+      4.	cd compute-services/vm
+      5.	chmod +x mln_env_config.sh
+      6.	./mln_env_config.sh
 ```
 4.	Generate an SSH key pair using this command.  Accept all default options.
 ```
@@ -112,16 +112,16 @@ az vm show --resource-group <RESOURCE_GROUP_NAME> --name jumpbox-vm --query publ
 Use SSH or RDP to connect to the jumpbox VM and then use `kubectl` to interact with your AKS cluster.
 
 ## Post-deployment
-After deploying the AKS cluster, you may want to perform additional tasks such as:
+After deploying the AKS cluster, we may perform additional tasks such as:
 
 * Configuring node pools
 * Deploying Kubernetes applications using Helm
 * Setting up monitoring and logging for your AKS cluster
 
-Refer to the [official Azure documentation](https://docs.microsoft.com/en-us/azure/aks/) for more information on managing and operating your AKS deployment.
+:bulb: Refer to the [official Azure documentation](https://docs.microsoft.com/en-us/azure/aks/) for more information on managing and operating your AKS deployment. Additional configuration and management procedures will be added as use cases and opportunities are discovered.
 
 ## Contributing
-Contributions are welcome! If you find any issues or have suggestions for improvement, please create an issue or submit a pull request.
+If you find any issues or have suggestions for improvement, please create an issue or submit a pull request.  Contributions are welcomed.
 
 
 ```
