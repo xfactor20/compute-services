@@ -1,6 +1,3 @@
-Here's a `README.md` file formatted in TypeScript for GitHub that provides step-by-step instructions for automating the provisioning and configuration of a GCP VM with a MongoDB container using Terraform.
-
-```markdown
 # GCP MongoDB Container Provisioning with Terraform
 
 This project automates the provisioning and configuration of a Google Cloud Platform (GCP) Virtual Machine (VM) to host a MongoDB container using Terraform. The process includes setting up the VM, installing Docker, and deploying MongoDB as a Docker container.
