@@ -65,7 +65,7 @@ resource "tls_private_key" "ssh_key" {
 resource "google_compute_instance" "k8s_vm" {
   count        = 3
   name         = "k8s-vm-${count.index}"
-  machine_type = "n1-standard-1"  # Use a machine type with GPU support if necessary
+  machine_type = "a2-ultragpu-1g"  # Machine type with GPU support
   zone         = var.gcp_zone
 
   boot_disk {
@@ -93,7 +93,7 @@ resource "google_compute_instance" "k8s_vm" {
   tags = ["k8s-node"]
 
   metadata = {
-    ssh-keys = "azureuser:${vault_generic_secret.ssh_keys.data["data"]["public_key"]}"
+    ssh-keys = "gcpuser:${vault_generic_secret.ssh_keys.data["data"]["public_key"]}"
   }
 }
 
