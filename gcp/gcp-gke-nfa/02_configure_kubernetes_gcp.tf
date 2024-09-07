@@ -15,7 +15,7 @@ resource "null_resource" "k8s_master_init" {
 
     connection {
       type        = "ssh"
-      user        = "azureuser"
+      user        = "gcpuser"
       private_key = file("${path.module}/id_rsa")
       host        = google_compute_instance.k8s_vm[0].network_interface[0].access_config[0].nat_ip
     }
@@ -32,7 +32,7 @@ resource "null_resource" "k8s_workers_join" {
 
     connection {
       type        = "ssh"
-      user        = "azureuser"
+      user        = "gcpuser"
       private_key = file("${path.module}/id_rsa")
       host        = google_compute_instance.k8s_vm[count.index + 1].network_interface[0].access_config[0].nat_ip
     }
