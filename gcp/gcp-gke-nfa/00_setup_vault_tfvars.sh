@@ -1,7 +1,18 @@
 #!/bin/bash
 
+# IMPORTANT!!! Prerequisite - be sure to run th following command to generate ssh private and public keys BEFORE running this script.  It will fail otherwise
+# Run the following command.  Accept all default values. Leave the passphrase blank
+#
+#       ssh-keygen -t rsa -b 4096 -C "vault-server-access-by-<my-email-address>"
+
 # Step 1: Start Vault
-docker run -d --name vault-dev -p 8200:8200 vault
+# Run an explicit Vault server container version in development mode
+docker run -d --name vault-dev -p 8200:8200 -e 'VAULT_DEV_ROOT_TOKEN_ID=root' hashicorp/vault:1.13.3
+
+# docker run -d --name vault-dev -p 8200:8200 hashicorp/vault:1.13.3
+# docker run -d --name vault-dev -p 8200:8200 vault
+
+# Set environment variables to be referenced by terraform scripts
 export VAULT_ADDR='http://127.0.0.1:8200'
 export VAULT_TOKEN="root"
 
