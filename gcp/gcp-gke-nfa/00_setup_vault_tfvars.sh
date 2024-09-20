@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# IMPORTANT!!!
+
 # Prerequisites 
 
 # 1. Docker is installed on the VM host or PC Client
@@ -26,12 +28,61 @@ export VAULT_TOKEN="root"
 
 echo "1st: The Vault address: $VAULT_ADDR. The Vault token: $VAULT_TOKEN ..."
 
-# Step 1: Start Vault
-# docker run -d --name vault-dev -p 8200:8200 vault
 
-# Run an explicit Vault server container version
-# docker run -d --name vault-dev -p 8200:8200 hashicorp/vault:1.13.3
-docker run -d --name vault-dev -p 8200:8200 -e 'VAULT_DEV_ROOT_TOKEN_ID=root' hashicorp/vault:1.13.3
+# Step 1: Check if Vault is installed, install if not. Proceed otherwise
+
+# Function to check if Vault is installed
+check_vault_installed() {
+    if ! command -v vault &> /dev/null; then
+        echo "Vault is not installed."
+        return 1
+    else
+        echo "Vault is already installed."
+        return 0
+    fi
+}
+
+# Function to install Vault
+install_vault() {
+    echo "Installing Vault..."
+    
+    # Add the HashiCorp GPG key
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+    # Add the official HashiCorp Linux repository
+    sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+    # Update the package list
+    sudo apt-get update
+
+    # Install Vault
+    sudo apt-get install -y vault
+
+    echo "Vault installation completed."
+}
+
+# Check if Vault is installed
+check_vault_installed
+if [ $? -ne 0 ]; then
+    install_vault
+fi
+
+# Step 2: Run an explicit version container of the Vault server
+
+VAULT_CONTAINER="vault-dev"
+
+# Check if the Docker container 'vault-dev' is running
+if [ $(docker ps --filter "name=$VAULT_CONTAINER" --filter "status=running" -q) ]; then
+    echo "The '$VAULT_CONTAINER' container is already running."
+else
+    echo "The 'vault-dev' container is not running. Starting the container..."
+    docker run -d --name $VAULT_CONTAINER -p 8200:8200 -e 'VAULT_DEV_ROOT_TOKEN_ID=root' hashicorp/vault:1.13.3
+    if [ $? -eq 0 ]; then
+        echo "'$VAULT_CONTAINER' container started successfully."
+    else
+        echo "Failed to start '$VAULT_CONTAINER' container."
+    fi
+fi
 
 echo "Making sure Vault server is running prior to setting up secret keys..."
 
@@ -40,13 +91,34 @@ while ! curl -s "$VAULT_ADDR/v1/sys/health" | grep '"sealed":false'; do
     sleep 2
 done
 
-# Step 2: Create Secrets in Vault
+# Step 3: Create Secrets in Vault
 # vault secrets enable -path=secret kv
-echo "Setting up keys on Vault server now..."
-vault kv put secret/gcp/k8s_ssh_keys private_key="$(cat ~/.ssh/id_rsa)" public_key="$(cat ~/.ssh/id_rsa.pub)"
-echo "DONE: Setting up keys on Vault repository command..." 
 
-# Step 3: Create Terraform Variables
+echo "Verifying and setting up keys on Vault server now..."
+
+# Define the Vault path
+vault_path="secret/gcp/k8_ssh_keys"
+private_key_var="private_key"
+public_key_var="public_key"
+
+# Check if the Vault path exists with the required variables
+output=$(vault kv get -field=$private_key_var $vault_path 2>&1)
+if [[ $output == *"No value found"* ]]; then
+  echo "Keys not found, creating them..."
+
+  # Store the SSH keys in Vault
+  vault kv put $vault_path private_key="$(cat ~/.ssh/id_rsa)" public_key="$(cat ~/.ssh/id_rsa.pub)"
+
+  echo "SSH keys have been stored in Vault."
+else
+  echo "Keys already exist at the specified path."
+fi
+
+# vault kv put secret/gcp/k8s_ssh_keys private_key="$(cat ~/.ssh/id_rsa)" public_key="$(cat ~/.ssh/id_rsa.pub)"
+
+echo "DONE: Setting up keys on Vault Server..." 
+
+# Step 4: Create Terraform Variables
 tf_vars_file="terraform.tfvars"
 
 echo "Creating terraform variables file: $tf_vars_file" 
@@ -65,5 +137,6 @@ if [ -e "$fileName" ]; then
 else
     echo "ERROR: The file ' $tf_vars_file' does not exist.  Please review and fix the process.  Once resolved, run this part again to set up Terraform variables file"
 fi
+
 
                                                                                 
