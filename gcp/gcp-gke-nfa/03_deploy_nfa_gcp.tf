@@ -25,7 +25,7 @@ resource "null_resource" "deploy_nvidia_plugin" {
 resource "null_resource" "deploy_ai_agent" {
   provisioner "remote-exec" {
     inline = [
-      "kubectl apply -f /path/to/your/llm-ai-agent.yml"
+      "kubectl apply -f ~/projects/ragchat-morpheus/k8s/deployment.yaml"
     ]
 
     connection {
