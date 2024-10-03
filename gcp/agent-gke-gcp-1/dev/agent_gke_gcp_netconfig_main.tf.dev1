@@ -106,8 +106,7 @@ resource "google_container_cluster" "gke_cluster" {
 
   master_authorized_networks_config {
     cidr_blocks	{ 
-        cidr_block   = "108.211.106.135/32"  # Allows access from admin system
-        # cidr_block   = "0.0.0.0/0"  # Allows access from any IP, adjust for security
+        cidr_block   = "0.0.0.0/0"  # Allows access from any IP, for testing only.  Restrict to IP block for use
         display_name = "Admin System"  # Adjust this for your specific network requirements
     }
   }
