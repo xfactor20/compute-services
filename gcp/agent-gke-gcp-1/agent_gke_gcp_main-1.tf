@@ -25,28 +25,6 @@ resource "google_container_cluster" "gke_cluster" {
   initial_node_count = 1
 
   deletion_protection = false
-  
-  node_config {
-    machine_type = "n1-highmem-8"
-    disk_size_gb = 100  # Adjust as needed
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-
-    guest_accelerator {
-      type  = "nvidia-tesla-p100"
-      count = 1  # One GPU per node
-    }
-
-    metadata = {
-      "disable-legacy-endpoint" = "true"
-    }
-
-    # Enable GPU driver installation
-    workload_metadata_config {
-      mode = "GCE_METADATA"
-    }
-  }
 
   # Enable autoscaling
   remove_default_node_pool = true
@@ -73,6 +51,11 @@ resource "google_container_node_pool" "gke_node_pool" {
 
     metadata = {
       "disable-legacy-endpoint" = "true"
+    }
+
+    # Enable GPU driver installation
+    workload_metadata_config {
+      mode = "GCE_METADATA"
     }
   }
 
@@ -103,6 +86,7 @@ resource "google_compute_firewall" "allow_http" {
     ports    = ["80", "443", "22", "8000", "11434"]
   }
 
+  # For testing. Define access pool for production environments
   source_ranges = ["0.0.0.0/0"]  # Public access
 }
 
