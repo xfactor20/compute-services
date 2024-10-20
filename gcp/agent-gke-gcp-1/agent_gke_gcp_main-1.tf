@@ -97,6 +97,11 @@ resource "null_resource" "apply_kubernetes_manifest" {
     google_container_node_pool.gke_node_pool,
   ]
 
+  # NOTE:
+  # Get this file from the "dev" directory.  Copy the file link to this directory. Then rename it to "mor-chat-dply.yaml":
+  #  https://github.com/FLock-io/ragchat-morpheus/blob/main/k8s/deployment.yaml
+  # A test version may be found in the "reference" directory
+
   provisioner "local-exec" {
     command     = "kubectl apply -f mor-chat-dply.yaml"
     environment = {
