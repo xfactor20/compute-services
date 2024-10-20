@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# IMPORTANT!!!
 
-# Prerequisites 
+# PREREQUISITES 
 
 # 1. Docker is installed on the VM host or PC Client
 # 2. Vault is installed on the VM host or PC Client. Reference instructions here: https://developer.hashicorp.com/vault/install 
@@ -118,14 +117,17 @@ else
   echo "Keys already exist at the specified path on the Vault server"
 fi
 
+# For reference only
 # vault secrets enable -path=secret kv
 # vault kv put secret/gcp/k8s_beta_ssh_keys private_key="$(cat ~/.ssh/id_rsa)" public_key="$(cat ~/.ssh/id_rsa.pub)"
 
-
 echo "DONE: Setting up keys on Vault repository command..." 
 
+####################################################################
 # Step 4: Create Terraform Variables
 tf_vars_file="terraform.tfvars"
+
+NOTE: Default settings for region and zone listed. Change here and execute for desired environment runtime
 
 echo "Creating terraform variables file: $tf_vars_file" 
 
