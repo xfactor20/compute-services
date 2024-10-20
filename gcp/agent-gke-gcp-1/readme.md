@@ -182,30 +182,39 @@ The Terraform script performs the following actions:
 
 ## Usage Instructions
 
-1. **Set Variables**: Create a `terraform.tfvars` file or set environment variables with your GCP project ID and region.
+1. **Set Variables**: Create a `terraform.tfvars` file or set environment variables with your GCP project ID and region and Vault server (access keys storage). Run the below command for the file located in the scripts directory: 
+   ```bash
+   ./scripts/setup_tfvars_vault.sh
+   ```
+   
+   Conversely, make certain these environment variables are set prior to proceeding
    ```hcl
    gcp_project_id = "your-project-id"
    gcp_region     = "your-region"
+   gcp_zone       = "your-zone"
    ```
-2. **Initialize Terraform**:
+   
+  NOTE: The default region and zone are set to "us-west1" and "us-west1-a", respectively.  Change these to your region of choice prior to runtime operations.
+   
+3. **Initialize Terraform**:
    ```bash
    terraform init
    ```
-3. **Plan the Deployment**:
+4. **Plan the Deployment**:
    ```bash
    terraform plan
    ```
-4. **Apply the Configuration**:
+5. **Apply the Configuration**:
    ```bash
    terraform apply
    ```
-5. **Access the Cluster**:
+6. **Access the Cluster**:
    - The kubeconfig file is located at `${path.module}/kubeconfig`.
    - Use `kubectl` with the generated kubeconfig:
      ```bash
      KUBECONFIG=${path.module}/kubeconfig kubectl get nodes
      ```
-6. **Deploy Kubernetes Manifests**:
+7. **Deploy Kubernetes Manifests**:
    - Ensure `mor-chat-dply.yaml` is in the working directory.
    - The manifest is applied automatically during `terraform apply`.
    - To reapply manually:
