@@ -98,36 +98,14 @@ resource "google_container_cluster" "gke_cluster" {
 
   master_authorized_networks_config {
     cidr_blocks	{ 
-        cidr_block   = "108.211.106.135/32"  # Allows access from admin system
-        # cidr_block   = "0.0.0.0/0"  # Allows access from any IP, adjust for security
+        # cidr_block   = "108.211.106.135/32"  # Allows access from admin system
+        cidr_block   = "0.0.0.0/0"  # Allows access from any IP, adjust for security
         display_name = "Admin System"  # Adjust this for your specific network requirements
     }
   }
 
   network    = google_compute_network.gke_vpc_network.id
   subnetwork = google_compute_subnetwork.gke_subnetwork.name
-
-  node_config {
-    machine_type = "n1-highmem-8"
-    disk_size_gb = 100  # Adjust as needed
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-
-    guest_accelerator {
-      type  = "nvidia-tesla-p100"
-      count = 1  # One GPU per node
-    }
-
-    metadata = {
-      "disable-legacy-endpoint" = "true"
-    }
-
-    # Enable GPU driver installation
-    workload_metadata_config {
-      mode = "GCE_METADATA"
-    }
-  }
 
   # Enable autoscaling
   remove_default_node_pool = true
@@ -156,6 +134,12 @@ resource "google_container_node_pool" "gke_node_pool" {
     metadata = {
       "disable-legacy-endpoint" = "true"
     }
+
+    # Enable GPU driver installation
+    workload_metadata_config {
+      mode = "GCE_METADATA"
+    }
+
   }
 
   # Optional autoscaling configuration
