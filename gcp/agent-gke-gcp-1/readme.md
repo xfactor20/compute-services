@@ -32,7 +32,7 @@ The Terraform script performs the following actions:
 ## Prerequisites
 
 - **Terraform**: Install [Terraform](https://www.terraform.io/downloads.html).
-- **Google Cloud SDK**: Install and configure the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install).
+- **Google Cloud SDK**: Install and configure the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) OR Log on to your Google Cloud Platform console and open an Cloudshell shell to execute generation of the NFA GKE environment 
 - **GCP Project**: Have a GCP project with necessary permissions.
 - **Kubernetes Manifest**: Ensure `mor-chat-dply.yaml` is available in the working directory.
 - **Variables**: Define `var.gcp_project_id` and `var.gcp_region`.
@@ -143,6 +143,15 @@ The Terraform script performs the following actions:
   ```
 
 ### Applying Kubernetes Manifest
+
+IMPORTANT: Copy the `mor-chat-dply.yaml` in the location where location of the terraform scripts PRIOR to runtime operations.  It has customizations for this development operations environment.
+
+Refernce the flock.io team and this file for updated customizations
+https://github.com/FLock-io/ragchat-morpheus/blob/main/k8s/deployment.yaml
+
+```hcl
+https://github.com/xfactor20/compute-services/master/gcp/agent-gke-gcp-1/reference/mor-chat-dply.yaml
+```
 
 - **Resource**: `null_resource.apply_kubernetes_manifest`
 - **Action**: Applies `mor-chat-dply.yaml` using `kubectl`
