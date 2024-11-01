@@ -372,10 +372,11 @@ For running `llama.cpp` on **GCP**, **Azure**, and **AWS**, the **minimum GPU re
 
 ## References
 
-- [Sample Basic Compute Provider Build](https://github.com/MorpheusAIs/Docs/blob/main/!KEYDOCS%20README%20FIRST!/Compute%20Providers/Sample%20Basic%20Compute%20Provider%20Build.md)
-- [Mac Boot Strap Guide](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/mac-boot-strap.md)
-- [Provider Setup Documentation](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/02-provider-setup.md)
+- [Basic Compute Provider Build](https://github.com/MorpheusAIs/Docs/blob/main/!KEYDOCS%20README%20FIRST!/Compute%20Providers/Sample%20Basic%20Compute%20Provider%20Build.md)
+- [Proxy Server Provider Setup Documentation](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/02-provider-setup.md)
 - [Morpheus-Lumerin Node Environment Overview](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/00-overview.md)
+- [Example scripts for install and setup of components (compute provider, proxy server) onto host systems (e.g. VM instances, hardware, etc.](https://github.com/xfactor20/compute-services/tree/master/scripts)
+- [Standalone client setup example - Mac-based Bootstrap Guide](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/mac-boot-strap.md)
 ---
 
 **Note:** For cleaning and troubleshooting, refer to the [Mac Boot Strap Guide](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/mac-boot-strap.md).
