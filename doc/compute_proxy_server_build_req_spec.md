@@ -147,7 +147,12 @@ Navigate to `http://127.0.0.1:8080` in a browser to see the model interface and 
 - **Existing Funded Wallet with saMOR and saETH**
   - You must have the private key for the wallet (needed for the `.env` file configuration).
 - **An Alchemy or Infura Free Account**
+  - [Create Alchemy account](https://www.alchemy.com/faucets/arbitrum-sepolia)
+  - [Create Infura account](https://app.infura.io/register)
+    
   - Private API key for the Arbitrum Sepolia testnet (`wss://arb-sepolia.g.alchemy.com/v2/<your_private_alchemy_api_key>`).
+
+    
 - **Proxy Router Environment Variables (`.env.example` file):**
 
   Key values in the `.env` file:
@@ -178,19 +183,21 @@ Navigate to `http://127.0.0.1:8080` in a browser to see the model interface and 
 
    ```bash
    git clone https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node.git
-   cd Morpheus-Lumerin-Node/proxy-router
    ```
 
-2. **Update Environment Configuration File:**
-
+2. **Set the `Proxy Router` environment variables file:**
+  - From a command prompt, set the environment configuration file and review settings:
+   
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/proxy-router
    cp .env.example .env
    vi .env
    ```
 
 3. **Build and Run the Proxy Router:**
-
+  
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/proxy-router
    ./build.sh
    make run
    ```
@@ -213,29 +220,27 @@ Navigate to `http://127.0.0.1:8080` in a browser to see the model interface and 
 
 **Note:** TCP port that your proxy-router API interface is listening on (`8082` in this example).
 
-1. **Navigate to `ui-desktop` Directory:**
+1. **Set the `UI Desktop` component environment variables file:**
+   - Set the file and review the settings:
 
    ```bash
-   cd Morpheus-Lumerin-Node/ui-desktop
-   ```
-
-2. **Check Environment Variables:**
-
-   ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/ui-desktop
    cp .env.example .env
    vi .env
    ```
+   
+   Verify the variable `PROXY_WEB_URL` is set to `8082`.
 
-   Ensure `PROXY_WEB_URL` is set to `8082`.
-
-3. **Install Dependencies, Compile, and Run the UI Desktop:**
-
+2. **Install dependencies, compile, and start the UI Desktop:**
+- From a command prompt, build the UI Desktop component:
+  
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/ui-desktop
    yarn install
    yarn dev
    ```
 
-4. **Validate that the UI Desktop is Running:**
+3. **Validate the UI Desktop is Running:**
 
    - The Electron app should start and run through onboarding.
    - Verify your ERC20 Wallet Address.
@@ -246,36 +251,35 @@ Navigate to `http://127.0.0.1:8080` in a browser to see the model interface and 
 
 **Note:** TCP port that your proxy-router API interface is listening on (`8082` in this example).
 
-1. **Navigate to CLI Directory:**
+1. **Set the `CLI` component environment variables file:**
+   - Set the file and review the settings:
 
    ```bash
-   cd Morpheus-Lumerin-Node/cli
-   ```
-
-2. **Verify Environment Variables:**
-
-   ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/cli
    cp .env.example .env
    vi .env
    ```
 
-   Ensure `API_HOST` is set to `http://localhost:8082`.
+   Verify the variable `API_HOST` is set to `http://localhost:8082`.
 
-3. **Build CLI:**
-
+2. **Build CLI:**
+  
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/cli
    make build
    ```
 
-4. **Validate that the CLI is Working:**
-
+3. **Validate that the CLI component is Working:**
+  
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/cli
    ./mor-cli -h
    ```
 
-5. **Validate Connection to Proxy Router:**
-
+4. **Validate Connection to Proxy Router:**
+  
    ```bash
+   cd <LOCAL_DIRECTORY_PATH_ROOT>/Morpheus-Lumerin-Node/cli
    ./mor-cli healthcheck
    ```
 
