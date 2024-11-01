@@ -1,6 +1,8 @@
 # AI Compute and Proxy Router Node Build on Cloud: Specifications, Requirements, and Guidance
 
-    Requirements and Specifications for build and setup of Compute adn Proxy Router nodes on Cloud Platforms
+    Requirements and Specifications for build and setup of Compute and Proxy Router nodes on hybrid runtime platforms (cloud/bare-metal)
+
+    NOTE: This instruction set serves as reference material for automated deployment initiatives (e.g. containers, provisioning, etc.)
 
 ## Table of Contents
 
@@ -216,6 +218,8 @@ Navigate to `http://127.0.0.1:8080` in a browser to see the model interface and 
 
    Navigate to `http://localhost:8082/swagger/index.html` in a browser to see the proxy-router interface and test the Swagger API.
 
+INFO: Reference proxy-router docker file is located here: [Proxy Router development](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/tree/dev/proxy-router)
+
 #### B. UI Desktop
 
 **Note:** TCP port that your proxy-router API interface is listening on (`8082` in this example).
@@ -371,7 +375,7 @@ For running `llama.cpp` on **GCP**, **Azure**, and **AWS**, the **minimum GPU re
 - [Sample Basic Compute Provider Build](https://github.com/MorpheusAIs/Docs/blob/main/!KEYDOCS%20README%20FIRST!/Compute%20Providers/Sample%20Basic%20Compute%20Provider%20Build.md)
 - [Mac Boot Strap Guide](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/mac-boot-strap.md)
 - [Provider Setup Documentation](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/02-provider-setup.md)
-
+- [Morpheus-Lumerin Node Environment Overview](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/00-overview.md)
 ---
 
 **Note:** For cleaning and troubleshooting, refer to the [Mac Boot Strap Guide](https://github.com/Lumerin-protocol/Morpheus-Lumerin-Node/blob/dev/docs/mac-boot-strap.md).
